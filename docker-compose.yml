@@ -14,7 +14,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_DATABASE=laravel_api
+      - DB_DATABASE=user_product_management
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
     depends_on:
@@ -37,11 +37,11 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_DB: laravel_api
+      POSTGRES_DB: user_product_management
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5437:5432"
+      - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
 
