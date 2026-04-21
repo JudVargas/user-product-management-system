@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PurchaseController;
 
 Route::middleware(['web', 'auth:sanctum'])->group(function () {
 
@@ -14,5 +15,6 @@ Route::middleware(['web', 'auth:sanctum'])->group(function () {
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
     });
+    Route::post('/purchase', [PurchaseController::class, 'purchase']);
     
 });
