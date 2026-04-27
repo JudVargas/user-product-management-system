@@ -15,29 +15,62 @@ class ProductService
 
     public function list()
     {
-        return $this->repository->getAll();
+        try {
+            return $this->repository->getAll();
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al obtener los productos: ' . $e->getMessage());
+        }
     }
 
     public function get($id)
     {
-        return $this->repository->findById($id);
+        try {
+            return $this->repository->findById($id);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al obtener el producto: ' . $e->getMessage());
+        }
     }
 
     public function create($data)
     {
-        return $this->repository->create($data);
+        try {
+            $data['name'] = trim($data['name']);
+            $data['description'] = trim($data['description']);
+            $data['price'] = floatval($data['price']);
+            $data['stock'] = intval($data['stock']);
+            return $this->repository->create($data);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al crear el producto: ' . $e->getMessage());
+        }
     }
 
     public function update($id, $data)
     {
-        $product = $this->repository->findById($id);
-        return $this->repository->update($product, $data);
+        try {
+            $data['name'] = trim($data['name']);
+            $data['description'] = trim($data['description']);
+            $data['price'] = floatval($data['price']);
+            $data['stock'] = intval($data['stock']);
+            $product = $this->repository->findById($id);
+            return $this->repository->update($product, $data);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al actualizar el producto: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
     {
-        $product = $this->repository->findById($id);
-        return $this->repository->delete($product);
+        try {
+            $product = $this->repository->findById($id);
+            return $this->repository->delete($product);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al eliminar el producto: ' . $e->getMessage());
+        }
     }
 }
 

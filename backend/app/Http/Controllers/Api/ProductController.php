@@ -18,26 +18,39 @@ class ProductController extends Controller
 
     public function index()
     {
-        return response()->json($this->service->list());
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->service->list()
+        ]);
     }
 
     public function store(StoreProductRequest $request)
     {
         $product = $this->service->create($request->validated());
 
-        return response()->json($product, 201);
+        return response()->json([
+            'success' => true,
+            'data' => $product
+        ], 201);
     }
 
     public function show($id)
     {
-        return response()->json($this->service->get($id));
+        return response()->json([
+            'success' => true,
+            'data' => $this->service->get($id)
+        ]);
     }
 
     public function update(UpdateProductRequest $request, $id)
     {
         $product = $this->service->update($id, $request->validated());
 
-        return response()->json($product);
+        return response()->json([
+            'success' => true,
+            'data' => $product
+        ]);
     }
 
     public function destroy($id)
@@ -45,6 +58,7 @@ class ProductController extends Controller
         $this->service->delete($id);
 
         return response()->json([
+            'success' => true,
             'message' => 'Producto eliminado'
         ]);
     }

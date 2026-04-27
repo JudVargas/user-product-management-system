@@ -15,6 +15,8 @@ Route::middleware(['web', 'auth:sanctum'])->group(function () {
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
     });
+    
+    // Ruta para realizar una compra
     Route::post('/purchase', [PurchaseController::class, 'purchase']);
     
 });

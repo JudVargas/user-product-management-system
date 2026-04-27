@@ -14,34 +14,63 @@ class UserService
     }
 
     public function list()
-    {
-        return $this->repository->getAll();
+    {   
+        try {
+            return $this->repository->getAll();
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al obtener los usuarios: ' . $e->getMessage());
+        }
     }
 
     public function get($id)
     {
-        return $this->repository->findById($id);
+        try {
+            return $this->repository->findById($id);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al obtener el usuario: ' . $e->getMessage());
+        }
     }
 
     public function create($data)
     {
-        $data['password'] = Hash::make($data['password']);
-        return $this->repository->create($data);
+        try {
+            $data['name'] = trim($data['name']);
+            $data['email'] = strtolower($data['email']);
+            $data['password'] = Hash::make($data['password']);
+            return $this->repository->create($data);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al crear el usuario: ' . $e->getMessage());
+        }
     }
 
     public function update($id, $data)
     {
-        $user = $this->repository->findById($id);
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
+        try{
+            
+            if (isset($data['password'])) {
+                $user = $this->repository->findById($id);
+                $data['password'] = Hash::make($data['password']);
+            }
+            return $this->repository->update($user, $data);
         }
-        return $this->repository->update($user, $data);
+        catch (\Exception $e) {
+            throw new \Exception('Error al actualizar el usuario: ' . $e->getMessage());
+        }
+
     }
 
     public function delete($id)
     {
-        $user = $this->repository->findById($id);
-        return $this->repository->delete($user);
+        try {
+            $user = $this->repository->findById($id);
+            return $this->repository->delete($user);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error al eliminar el usuario: ' . $e->getMessage());
+        }
     }
 
 };

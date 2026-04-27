@@ -17,10 +17,11 @@ class PurchaseController extends Controller
 
     public function purchase(PurchaseRequest $request)
     {
+        
      $order = $this->service->purchase(auth()->user(), $request->validated());
      return response()->json([
-            'message' => 'Purchase successful',
-            'order' => $order,
+            'success' => true,
+            'data' => $order,
      ], 201);
      
     }
